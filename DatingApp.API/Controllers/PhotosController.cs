@@ -33,7 +33,7 @@ namespace DatingApp.API.Controllers
             Account acc = new Account(
                 _cloudinaryConfig.Value.CloudName,
                 _cloudinaryConfig.Value.ApiKey,
-                _cloudinaryConfig.Value.ApiSecrets
+                _cloudinaryConfig.Value.ApiSecret
             );
 
             _cloudinary = new Cloudinary(acc);
@@ -50,7 +50,7 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPhotoForUser(int userId, PhotoForCreationDto photoForCreationDto)
+        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm]PhotoForCreationDto photoForCreationDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();

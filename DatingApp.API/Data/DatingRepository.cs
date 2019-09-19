@@ -44,11 +44,11 @@ namespace DatingApp.API.Data
             return user;
         }
 
-        public async Task<PagedList<User>> GetUsers(UserParams userParams)
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            var users = _context.Users.Include(p => p.Photos);
+            var users = await _context.Users.Include(p => p.Photos).ToListAsync();
 
-            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+            return users;
         }
 
         public async Task<bool> SaveAll()
